@@ -1,0 +1,145 @@
+<aura:component controller="DocumentSync" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.viewAll}"/>
+    <aura:attribute name="oppObjs" type='Object[]' access="public" />
+    <aura:attribute name="fileCount" type='String' default="0"/>
+    <aura:attribute name="objectName" type='String' default=""/>
+    <aura:attribute name="objectDisplayName" type='String' default=""/>
+    <aura:attribute name="recordName" type='String' default=""/>
+    
+    <div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader" role="banner" data-aura-class="forceListViewManagerHeader">
+        <div class="slds-grid" >
+            <div class="slds-col slds-has-flexi-truncate" >
+                <div class="slds-media slds-no-space slds-grow" >
+                    <div class="slds-media__body slds-align-middle" >
+                        <nav role="navigation" aria-label="Breadcrumbs" >
+                            <ol class="slds-breadcrumb slds-list--horizontal" >
+                                <li class="slds-breadcrumb__item slds-line-height--reset" >
+                                    <a title="{!v.objectDisplayName}"  onclick="{!c.goToObjectName}" class="forceBreadCrumbItem" data-aura-class="forceBreadCrumbItem">
+                                        <span class="uiOutputText" data-aura-class="uiOutputText">{!v.objectDisplayName}</span>
+                                    </a>
+                                </li>
+                                <li class="slds-breadcrumb__item slds-line-height--reset" >
+                                    <a title="{!v.objectDisplayName}"  onclick="{!c.goToRecordName}" class="forceBreadCrumbItem" data-aura-class="forceBreadCrumbItem">
+                                        <span class="uiOutputText" data-aura-class="uiOutputText">{!v.recordName}</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </nav>
+                        <h1 class="slds-page-header__title slds-truncate" title="Files" >Files</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid " >
+            <div class="slds-col slds-align-bottom" >
+                <p class="slds-text-body--small" >
+                    <div>
+                        <span class="countSortedByFilteredBy">{!v.fileCount} items • Sorted by Created Date </span>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="backgroundColor" style="min-height: 580px; background-color: white;">
+        <div class="centerRegion">
+            <div class="test-listViewManager slds-grid slds-grid--vertical forceListViewManager"> 
+                <table class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout" role="grid" style="width: 100%">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col" style="width: 3.75rem;">
+                                <div class="slds-th__action">
+                                    <span class="slds-assistive-text">Errors</span>
+                                </div>
+                            </th>                            
+                            <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col" style="width: 8.75rem;">
+                                <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                    <span class="slds-truncate" title="Title">Title</span>
+                                </a>
+                            </th>
+                            <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Account Name" scope="col" style="width: 8.75rem;">
+                                <span class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                    <span class="slds-truncate" title="Owner">Owner</span>
+                                </span>
+                            </th>
+                            <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Close Date" scope="col" style="width: 8.75rem;">
+                                <span class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                    <span class="slds-truncate" title="Created Date">Created Date</span>
+                                </span>
+                            </th>
+                            <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Stage" scope="col" style="width: 8.75rem;">
+                                <span class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                    <span class="slds-truncate" title="Size">Size</span>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items='{!v.oppObjs}' var="sObj" >
+                            <tr class="slds-hint-parent">
+                                <td class="slds-cell-error slds-cell-edit" role="gridcell">
+                                    <button id="error-01" class="slds-button slds-button_icon slds-button_icon-error slds-m-horizontal_xxx-small slds-hidden" aria-hidden="true" tabindex="-1" title="Item 1 has errors">
+                                        <lightning:icon class="closeIcon slds-button__icon slds-button__icon--large slds-icon-utility-close slds-icon_container forceIcon"  iconName="utility:error" size="xx-small" alternativeText="Close" />
+                                        <span class="slds-assistive-text">Item 1 has errors</span>
+                                    </button>
+                                    <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
+                                </td>
+                                <td class="slds-cell-edit" scope="row" tabindex="0">
+                                    <span class="slds-grid slds-truncate">
+                                        <aura:if isTrue="{!or(or(sObj.DocumentType__c=='png',sObj.DocumentType__c=='jpg'),sObj.DocumentType__c=='gif')}">
+                                            <lightning:icon iconName="doctype:image" size="medium" alternativeText="Image" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!sObj.DocumentType__c=='pdf'}">
+                                            <lightning:icon iconName="doctype:pdf" size="medium" alternativeText="pdf Document" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!sObj.DocumentType__c=='txt'}">
+                                            <lightning:icon iconName="doctype:txt" size="medium" alternativeText="Text Document" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!or(sObj.DocumentType__c=='doc',sObj.DocumentType__c=='docx')}">
+                                            <lightning:icon iconName="doctype:word" size="medium" alternativeText="Word Document" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!or(sObj.DocumentType__c=='ppt',sObj.DocumentType__c=='pptx')}">
+                                            <lightning:icon iconName="doctype:ppt" size="medium" alternativeText="Deck" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!or(sObj.DocumentType__c=='xls',sObj.DocumentType__c=='xlsx')}">
+                                            <lightning:icon iconName="doctype:excel" size="medium" alternativeText="SpreadSheet" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!sObj.DocumentType__c=='csv'}">
+                                            <lightning:icon iconName="doctype:csv" size="medium" alternativeText="csv Document" />
+                                        </aura:if>
+                                        <aura:if isTrue="{!sObj.DocumentType__c=='snote'}">
+                                            <lightning:icon iconName="doctype:box_notes" size="medium" alternativeText="Salesforce Notes" />
+                                        </aura:if>
+                                        <a href="{!sObj.DocumentURL__c}" title="{!sObj.DocumentName__c}">{!sObj.DocumentName__c}</a>
+                                    </span>
+                                </td>
+                                <td class="slds-cell-edit" role="gridcell">
+                                    <span class="slds-grid slds-truncate">
+                                        <aura:if isTrue="{!sObj.Owner.Name}">
+                                            <p class="slds-truncate" ><a href="{!'/lightning/r/User/'+ sObj.Owner.Id + '/view'}" title="{!sObj.Owner.Name}">{!sObj.Owner.Name}</a></p>
+                                        </aura:if>
+                                        <aura:if isTrue="{!sObj.Owner_Name__c}">
+                                            <p class="slds-truncate" ><a href="{!'/lightning/r/User/'+ sObj.OwnerId + '/view'}" title="{!sObj.Owner_Name__c}">{!sObj.Owner_Name__c}</a></p>
+                                        </aura:if>
+                                        
+                                    </span>
+                                </td>
+                                <td class="slds-cell-edit" role="gridcell">
+                                    <span class="slds-grid slds-grid_align-spread">
+                                        <ui:outputDateTime class="slds-truncate" value="{!sObj.DocumentCreatedDate__c}"/>
+                                    </span>
+                                </td>
+                                <td class="slds-cell-edit" role="gridcell">
+                                    <span class="slds-grid slds-grid_align-spread">
+                                        <span class="slds-truncate" title="{!sObj.DocumentSize__c}">{!sObj.DocumentSize__c}</span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</aura:component>

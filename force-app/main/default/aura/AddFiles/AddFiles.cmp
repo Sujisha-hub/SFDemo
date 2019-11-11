@@ -1,0 +1,196 @@
+<aura:component controller="DocumentSync" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >   
+    
+    <aura:attribute name="oppObjs" type='Object[]' access="public" default="[]"/>
+    <aura:attribute name="oppValue" type='boolean' default="false"/>
+    <aura:attribute name="docTypeOptns" type='boolean' default="false"/>
+    <aura:attribute name="fileCount" type='String' default=""/>
+    <aura:attribute name="fileType" type='String' default=""/>
+    <aura:attribute name="objectName" type='String' default=""/>
+    <aura:attribute name="objName" type='String' default=""/>
+    <aura:attribute name="recordId" type='String' default=""/>
+    <aura:attribute name="documentType" type="List" default="[]"/>
+    <aura:attribute name="uploadedFiles" type="List" default="[]"/>
+    <aura:attribute name="docTypeValue" type="String" default=""/>
+    <aura:attribute name="descriptionValue" type="String" default=""/>
+    <aura:attribute name="noOfFiles" type="String" default=""/>
+    <aura:attribute name="xmlFileId" type="String" default=""/>
+    <aura:attribute name="fileNames" type="List" default="[]"/>
+    <aura:attribute name="file_Upload" type='boolean' default="true"/>
+    <aura:attribute name="xmlObject" type='Object' />
+    <aura:handler name="init" value="{! this }" action="{! c.GetObjectName }"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    
+    
+    <article class="slds-card slds-card_boundary forceRelatedListCardDesktop layout">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-contact" title="Files"> 
+                        <lightning:icon iconName="standard:file" size="small" alternativeText="Close" />
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a class="slds-card__header-link slds-truncate" title="Files" onclick="{!c.viewAllFiles}">
+                            <span class="slds-text-heading_small">Files {!v.fileCount} </span>
+                        </a>
+                    </h2>
+                </div>
+                <div class="slds-no-flex">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.toggle}">Add Files</button>
+                </div>
+            </header>
+        </div>
+        <div aura:id="fileDetails" class="slds-show">
+            <aura:if isTrue="{!v.oppValue==true}">
+                <aura:iteration items='{!v.oppObjs}' var="sObj" end="3">
+                    <ul class="uiAbstractList">
+                        <section >
+                            <li class="slds-var-p-horizontal_medium slds-var-p-vertical_xx-small forceContentVirtualRelatedListStencil forceRecordLayout"  data-aura-class="forceContentVirtualRelatedListStencil forceRecordLayout" >
+                                <a class="" role="" href="{!sObj.DocumentURL__c}" title="{!sObj.DocumentName__c}">
+                                    <div class="filerow" >
+                                        <div class="slds-size_12-of-12 slds-grid" >
+                                            <div class="slds-show_inline-block slds-float_left slds-align-middle thumbnailImg medium" data-refid="divId" >
+                                                <div class="forceContentContentThumbnail">
+                                                    <div class="thumbnailContainer">
+                                                        <aura:if isTrue="{!or(or(sObj.DocumentType__c=='png',sObj.DocumentType__c=='jpg'),sObj.DocumentType__c=='gif')}">
+                                                            <lightning:icon iconName="doctype:image" size="medium" alternativeText="Image" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!sObj.DocumentType__c=='pdf'}">
+                                                            <lightning:icon iconName="doctype:pdf" size="medium" alternativeText="pdf Document" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!sObj.DocumentType__c=='txt'}">
+                                                            <lightning:icon iconName="doctype:txt" size="medium" alternativeText="Text Document" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!or(sObj.DocumentType__c=='doc',sObj.DocumentType__c=='docx')}">
+                                                            <lightning:icon iconName="doctype:word" size="medium" alternativeText="Word Document" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!or(sObj.DocumentType__c=='ppt',sObj.DocumentType__c=='pptx')}">
+                                                            <lightning:icon iconName="doctype:ppt" size="medium" alternativeText="Deck" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!or(sObj.DocumentType__c=='xls',sObj.DocumentType__c=='xlsx')}">
+                                                            <lightning:icon iconName="doctype:excel" size="medium" alternativeText="SpreadSheet" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!sObj.DocumentType__c=='csv'}">
+                                                            <lightning:icon iconName="doctype:csv" size="medium" alternativeText="csv Document" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!sObj.DocumentType__c=='xml'}">
+                                                            <lightning:icon iconName="doctype:gdoc" size="medium" alternativeText="XML Document" />
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!sObj.DocumentType__c=='snote'}">
+                                                            <lightning:icon iconName="doctype:box_notes" size="medium" alternativeText="Salesforce Notes" />
+                                                        </aura:if>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-show_inline-block slds-float_left slds-p-left--x-small slds-truncate slds-m-right_x-small" >
+                                                <span class="itemTitle slds-text-color--default slds-text-body--regulardesktop uiOutputText" title="{!sObj.DocumentName__c}"  data-aura-class="uiOutputText">{!sObj.DocumentName__c}</span>
+                                                <p class="slds-m-around--none secondaryFields slds-text-body--small slds-truncate" >
+                                                    <ui:outputDate class="uiOutputDateTime" value="{!sObj.DocumentCreatedDate__c}"/>
+                                                    <span class="fileSizeAmount uiOutputNumber"  data-aura-class="uiOutputNumber">{!sObj.DocumentSize__c}</span>
+                                                    <span class="itemLabel slds-truncate uiOutputText"  data-aura-class="uiOutputText">{!sObj.DocumentType__c}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="cover" ></div>
+                            </li>
+                        </section>
+                    </ul>
+                </aura:iteration>
+                
+            </aura:if>        
+            <aura:if isTrue="{!v.oppValue==false}">
+                <lightning:layout class="slds-page-header slds-page-header--object-home layout">
+                    <lightning:layoutItem class="errormsg">
+                        No items to display
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </aura:if>  
+            <aura:if isTrue="{!v.oppValue==true}">
+                <footer class="slds-card__footer">                
+                    <a class="slds-card__footer-action" onclick="{!c.viewAllFiles}">View All</a>
+                </footer>
+            </aura:if>
+        </div>
+        <div aura:id="fileUpload" class="slds-hide">
+            <!--###### MODAL BOX BODY Part Start From Here ######-->
+            <div class="slds-modal__content slds-p-around--medium" data-scoped-scroll="true">
+                <div class="slds-clearfix slds-card groupDependentFieldEnabled forceDetailPanelDesktop" data-aura-class="forceDetailPanelDesktop">
+                    <div></div>
+                    <div></div>
+                    <div class="pageLevelErrors" tabindex="-1"></div>
+                    <div class="test-id__record-layout-container riseTransitionEnabled">
+                        <div class="full forcePageBlock forceRecordLayout" data-aura-class="forcePageBlock forceRecordLayout">
+                            <div class="test-id__section slds-section  slds-is-open full forcePageBlockSection forcePageBlockSectionEdit" data-aura-class="forcePageBlockSection forcePageBlockSectionEdit">
+                                <div class="test-id__section-content slds-section__content section__content">
+                                    <div class="slds-form slds-is-editing" role="list">
+                                        <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                            <div class="slds-has-flexi-truncate slds-p-horizontal_medium full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemEdit">
+                                                <div class="slds-form-element">                                                            
+                                                    <div class="slds-form-element__control">
+                                                        <aura:if isTrue="{!v.objectName !='Clarinet_Import__c'}">
+                                                            <aura:if isTrue="{!v.file_Upload}">
+                                                                <lightning:fileUpload multiple="true" accept=" .doc, .docx, .pdf, .ppt, .pptx, .xls, .xlsx, .gif, .png, .jpg, .txt, .csv" recordId="{!v.recordId}" aura:id="multipleUpload" onuploadfinished="{!c.handleUploadFinished}" />
+                                                                <aura:if isTrue="{!v.noOfFiles=='0'}">
+                                                                    <span style="color:red"><p> Upload Atleast 1 file to continue</p></span>
+                                                                </aura:if>
+                                                            </aura:if>
+                                                        </aura:if>
+                                                        <aura:if isTrue="{!v.objectName =='Clarinet_Import__c'}">
+                                                            <lightning:fileUpload multiple="false" accept=" .xml" recordId="{!v.recordId}" aura:id="xmlFileUpload" onuploadfinished="{!c.handleUploadFinished}" />
+                                                            <aura:if isTrue="{!v.noOfFiles=='0'}">
+                                                                    <span style="color:red"><p> Upload XML file to continue </p></span>
+                                                            </aura:if>
+                                                        </aura:if>
+                                                        <aura:iteration items='{!v.fileNames}' var="sObj">
+                                                            <span>{!sObj}</span><br/>
+                                                        </aura:iteration>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <aura:if isTrue="{!v.docTypeOptns}">
+                                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                                    <div class="slds-form-element">                                                            
+                                                        <div class="slds-form-element__control">
+                                                            <lightning:combobox aura:id="documentType" required="true" name="Document Type" label="Document Type" value="{!v.docTypeValue}" options="{!v.documentType}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                        </div>
+                                        <aura:if isTrue="{!v.docTypeOptns}">
+                                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                                <div class="slds-has-flexi-truncate slds-p-horizontal_medium full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemEdit">
+                                                    <div class="slds-form-element">                                                            
+                                                        <div class="slds-form-element__control">
+                                                            <lightning:input label="Description" maxlength="1000" aura:id="idDesc" value="{!v.descriptionValue}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                                    <div class="slds-form-element">                                                            
+                                                        <div class="slds-form-element__control">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>     
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>                                                                                                        
+                        </div>
+                    </div>
+                </div>                        
+            </div>
+            <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button--neutral" onclick="{!c.CancelFileUpload}" >Cancel</button>
+                <button class="slds-button slds-button--brand" onclick="{!c.saveFileType}">Save</button>
+            </div>
+        </div>        
+    </article>
+</aura:component>

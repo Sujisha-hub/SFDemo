@@ -1,0 +1,117 @@
+<!--###### Component to display the opportunity closure pop up ######-->
+<aura:component controller="OpportunityUpdate" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="closeOptions" type="List" default="[]"/>
+    <aura:attribute name="oppStage" type='String' access="public" /> 
+    <aura:attribute name="oppDate" type='Date' access="public" /> 
+    <aura:attribute name="recordId" type='String' access="public" /> 
+    <aura:attribute name="opportunityAmount" type='Decimal' access="public" /> 
+    <aura:attribute name="closureAmount" type='Decimal' access="public" /> 
+    <aura:attribute name="closingAmount" type='Decimal' access="public" /> 
+    <aura:attribute name="errorMessage" type="Boolean" default="false" /> 
+    <aura:attribute name="saveBtnValue" type="Boolean" default="false" /> 
+    <aura:attribute name="stageVal" type="Boolean" default="false" /> 
+    <aura:attribute name="isOpen" type="boolean" default="true"/>
+    <aura:attribute name="saveValue" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this }" action="{!c.LoadOptions }"/>
+    <aura:handler name="init" value="{!this }" action="{!c.LoadClosureDetails }"/>
+    <aura:handler name="change" value="{!v.closingAmount}" action="{!c.ValidateFields }"/>
+    <aura:attribute name="oppClosure" type="Closure_Stage__c" access="public" default="{'sobjectType':'Closure_Stage__c'                                                                        
+                                                                                       }"/>
+    <div class="slds-m-around--xx-large">
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpen}">            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container" style="margin: 0 auto !important; width: 70% !important; max-width: 840px !important; min-width: 20rem !important;">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.CloseModel}">
+                            <lightning:icon iconName="utility:close" size="xx-small" ></lightning:icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium">Close Opportunity</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium" data-scoped-scroll="true">
+                        <div class="slds-clearfix slds-card groupDependentFieldEnabled forceDetailPanelDesktop" data-aura-class="forceDetailPanelDesktop">
+                            <div></div>
+                            <div></div>
+                            <div class="pageLevelErrors" tabindex="-1"></div>
+                            <div class="test-id__record-layout-container riseTransitionEnabled">
+                                <div class="full forcePageBlock forceRecordLayout" data-aura-class="forcePageBlock forceRecordLayout">
+                                    <div class="test-id__section slds-section  slds-is-open full forcePageBlockSection forcePageBlockSectionEdit" data-aura-class="forcePageBlockSection forcePageBlockSectionEdit">
+                                        <div class="test-id__section-content slds-section__content section__content">
+                                            <div class="slds-form slds-is-editing" role="list">
+                                                <aura:if isTrue="{!v.errorMessage}">
+                                                    <span class="slds-form-element__help"> Stage Cannot be "Partial Closure" Since Opportunity Amount and Total Closure Value is equal! </span>
+                                                </aura:if>
+                                                <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                                    <div class="slds-has-flexi-truncate slds-p-horizontal_medium full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemEdit">
+                                                        <div class="slds-form-element">                                                            
+                                                            <div class="slds-form-element__control">
+                                                                <lightning:combobox required="true" name="status" label="Stage" aura:id="stagesOptions" value="{!v.oppStage}" onchange="{!c.ValidateStage}" options="{!v.closeOptions}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                                        <div class="slds-form-element">                                                            
+                                                            <div class="slds-form-element__control">
+                                                                <lightning:input type="date" required="true" onchange="{!c.ValidateFields}" aura:id="closeDate" label="Close Date" value="{!v.oppDate}"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                                    <div class="slds-has-flexi-truncate slds-p-horizontal_medium full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemEdit">
+                                                        <div class="slds-form-element">                                                            
+                                                            <div class="slds-form-element__control">
+                                                                <lightning:input type="number" disabled="true" formatter="currency" step="1" label="Opportunity Amount" aura:id="opportunityAmount" value="{!v.opportunityAmount}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                                        <div class="slds-form-element">                                                            
+                                                            <div class="slds-form-element__control">
+                                                                <lightning:input type="number" disabled="true" formatter="currency" step="1" label="Total Amount Received" aura:id="totAmount" value="{!v.closureAmount}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                                    <div class="slds-has-flexi-truncate slds-p-horizontal_medium full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemEdit">
+                                                        <div class="slds-form-element">                                                            
+                                                            <div class="slds-form-element__control">
+                                                                <lightning:input type="number" required="true" formatter="currency" step="1" onchange="{!c.ValidateFields}" label="Closure Amount" aura:id="clsrAmount" value="{!v.closingAmount}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                                        <div class="slds-form-element">                                                            
+                                                            <div class="slds-form-element__control">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                                                                                        
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.CloseModel}" >Cancel</button>
+                        <aura:if isTrue="{!v.saveValue}">
+                            <button class="slds-button slds-button--brand" onclick="{!c.UpdateOpportunity}">Save</button>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->            
+        </aura:if>
+    </div>
+    
+</aura:component>

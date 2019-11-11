@@ -1,0 +1,277 @@
+<!--##### Component to displaythe opportunity path based on opportunity stage #####-->
+<aura:component controller="OpportunityUpdate" implements="lightning:actionOverride,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="keyFieldToggleIcon" type="String" default="utility:chevronup"/>
+    <aura:attribute name="hideKeyFields" type="Boolean" default="false"/>
+    <aura:attribute name="selectedStage" type="String" default="Prospecting"/>
+    <aura:attribute name="opportunityStage" type="String" default=""/>
+    <aura:attribute name="closureLength" type="String" />
+    <aura:attribute name="closeStatus" type="String" default=" Mark Stage as Complete "/>
+    <aura:attribute name="closureStages" type="List" default="[]"/>
+    <aura:attribute name="opportunityStages" type="List" default="[]"/>
+    <aura:attribute name="closureFields" type="String[]" default="['Closure_Amount__c','Closure_Date__c']" />
+    <aura:attribute name="keyFieldRecordID" type="String" default="" />
+    <aura:attribute name="prospectingFields" type="String[]" default="['AccountId','Amount','CloseDate']" />
+    <aura:attribute name="qualificationFields" type="String[]" default="['ExpectedRevenue','ForecastCategoryName','LeadSource']" />
+    <aura:attribute name="needsAnalysisFields" type="String[]" default="['CloseDate','ForecastCategoryName','NextStep']" />
+    <aura:attribute name="negotiationFields" type="String[]" default="['Name','Probability','CloseDate']" />
+    <aura:attribute name="closeFields" type="String[]" default="['Amount','CloseDate','OwnerId']" />
+    <aura:handler name="init" value="{!this }" action="{!c.GetClosureStages }"/>
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-path slds-path_has-coaching">
+                <div class="runtime_sales_pathassistantCollapsibleDrawer">
+                    <div class="slds-grid slds-path__track">
+                        <div class="slds-grid slds-path__scroller-container">
+                            <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-path__trigger slds-path__trigger_open" title="Toggle Sales Coaching" aria-expanded="true" onclick="{!c.ToggleKeyFields}" aria-controls="path-coaching-2">
+                                <lightning:icon iconName="{!v.keyFieldToggleIcon}" size="x-small" ></lightning:icon>
+                                <span class="slds-assistive-text">Show Details</span>
+                            </button>
+                            <div class="slds-path__scroller" role="application">
+                                <div class="slds-path__scroller_inner">
+                                    <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                        <li class="slds-path__item " aura:id="liGatheringNeeds" role="presentation" >
+                                            <a aria-selected="false" data-id="Gathering Needs" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-26" role="option" tabindex="-1">
+                                                <lightning:formattedText value="Gathering Needs" />
+                                            </a>
+                                        </li>                                
+                                        <li class="slds-path__item" aura:id="liProspectingOptions" role="presentation">
+                                            <a aria-selected="false" data-id="Prospecting Options" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-27" role="option" tabindex="-1">
+                                                <lightning:formattedText value="Prospecting Options" />
+                                            </a>
+                                        </li>
+                                        <li class="slds-path__item " aura:id="liVerbalInterest" role="presentation">
+                                            <a aria-selected="false" data-id="Verbal Interest" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-28" role="option" tabindex="-1">
+                                                <lightning:formattedText value="Verbal Interest" />
+                                            </a>
+                                        </li>
+                                        <li class="slds-path__item " aura:id="liSentProposal" role="presentation">
+                                            <a aria-selected="false" data-id="Sent Proposal" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-29" role="option" tabindex="-1">
+                                                <lightning:formattedText value="Sent Proposal" />
+                                            </a>
+                                        </li>
+                                        <li class="slds-path__item " aura:id="liNegotiation" role="presentation">
+                                            <a aria-selected="false" data-id="Negotiation" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-29" role="option" tabindex="-1">
+                                                <lightning:formattedText value="Negotiation" />
+                                            </a>
+                                        </li>
+                                        <aura:iteration items="{!v.closureStages}" var="item" indexVar="index">
+                                            <aura:if isTrue="{!v.closureLength!=index}">
+                                                <li class="slds-path__item slds-is-complete" id="{!item.closedStage}" role="presentation" aura:id="listage">
+                                                    <a aria-selected="false" data-id="{!item.closedStage}" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-29" role="option" tabindex="-1">
+                                                        <lightning:formattedText value="{!item.closedStage}" />
+                                                    </a>
+                                                </li>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.closureLength==index}">
+                                                <li class="slds-path__item slds-is-current slds-is-active" id="{!item.closedStage}" aura:id="liClosureStages" role="presentation">
+                                                    <a aria-selected="false" data-id="{!item.closedStage}" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-29" role="option" tabindex="-1">
+                                                        <lightning:formattedText value="{!item.closedStage}" />
+                                                    </a>
+                                                </li>
+                                            </aura:if>
+                                        </aura:iteration>
+                                        <aura:if isTrue="{!(v.opportunityStage!='Closed Won')||(v.opportunityStage!='Closed Lost')}">
+                                            <li class="slds-path__item " aura:id="liClose" role="presentation">
+                                                <a aria-selected="false" data-id="Close" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-21" role="option" tabindex="-1">
+                                                    <lightning:formattedText value="Close" />
+                                                </a>
+                                            </li>
+                                        </aura:if>
+                                        <!--<aura:if isTrue="{!v.opportunityStage=='Closed Won'}">-->
+                                        <li class="slds-path__item slds-is-current slds-is-active slds-hide" aura:id="liCloseWon" role="presentation">
+                                            <a aria-selected="false" data-id="Closed Won" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-21" role="option" tabindex="-1">
+                                                <lightning:formattedText value="Closed Won" />
+                                            </a>
+                                        </li>
+                                        <!--</aura:if>-->
+                                        <aura:if isTrue="{!v.opportunityStage=='Closed Lost'}">
+                                            <li class="slds-path__item slds-is-current slds-is-lost slds-is-active" aura:id="liCloseLost" role="presentation">
+                                                <a aria-selected="false" data-id="Closed Lost" onclick="{!c.handleSelect}" class="slds-path__link" href="javascript:void(0);" id="path-21" role="option" tabindex="-1">
+                                                    <lightning:formattedText value="Closed Lost" />
+                                                </a>
+                                            </li>
+                                        </aura:if>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-path__action">
+                            <span class="slds-path__stage-name">Stage: Unqualified</span>
+                            <button class="slds-button slds-button_brand slds-path__mark-complete" onclick="{!c.SaveOpportunity}">
+                                <lightning:icon iconName="utility:check" size="xx-small" ></lightning:icon>{!v.closeStatus}</button>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.hideKeyFields}">
+                        <div class="slds-path__content" aura:id="keyFields">
+                            <div class="slds-path__coach slds-grid">
+                                <div class="slds-path__keys">
+                                    <div class="slds-grid slds-grid_align-spread slds-path__coach-title">
+                                        <h2>Key Fields This Stage</h2>
+                                        <button class="slds-button slds-path__coach-edit slds-text-body_small">Edit</button>
+                                    </div>
+                                    <aura:if isTrue="{!v.selectedStage=='Gathering Needs'}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                        <!--<lightning:recordForm
+                                                                              recordId="{!v.recordId}"
+                                                                              objectApiName="Opportunity"
+                                                                              fields="{!v.prospectingFields}"
+                                                                              columns="1"
+                                                                              mode="view" />-->
+                                                        <div class="slds-path__guidance">
+                                                            <h2 class="slds-path__coach-title">Guidance for Success</h2>
+                                                            <div class="slds-text-longform slds-path__guidance-content">
+                                                                <p>Client research</p>
+                                                                <p>Project research</p>                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.selectedStage=='Prospecting Options'}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                         <!--<lightning:recordForm
+                                                                              recordId="{!v.recordId}"
+                                                                              objectApiName="Opportunity"
+                                                                              fields="{!v.qualificationFields}"
+                                                                              columns="1"
+                                                                              mode="view" /> -->     
+                                                         <div class="slds-path__guidance">
+                                                            <h2 class="slds-path__coach-title">Guidance for Success</h2>
+                                                            <div class="slds-text-longform slds-path__guidance-content">
+                                                                <p>Smart questions</p>
+                                                                <p>BSB product examples</p>      
+                                                                <p>Mini-charrette</p>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.selectedStage=='Verbal Interest'}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                         <!--<lightning:recordForm
+                                                                              recordId="{!v.recordId}"
+                                                                              objectApiName="Opportunity"
+                                                                              fields="{!v.needsAnalysisFields}"
+                                                                              columns="1"
+                                                                              mode="view" />-->   
+                                                         <div class="slds-path__guidance">
+                                                            <h2 class="slds-path__coach-title">Guidance for Success</h2>
+                                                            <div class="slds-text-longform slds-path__guidance-content">
+                                                                <p>Yes</p>
+                                                                <p>Clear next steps</p>                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                        
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.selectedStage=='Sent Proposal'}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                         <!--<lightning:recordForm
+                                                                              recordId="{!v.recordId}"
+                                                                              objectApiName="Opportunity"
+                                                                              fields="{!v.negotiationFields}"
+                                                                              columns="1"
+                                                                              mode="view" />-->     
+                                                         <div class="slds-path__guidance">
+                                                            <h2 class="slds-path__coach-title">Guidance for Success</h2>
+                                                            <div class="slds-text-longform slds-path__guidance-content">
+                                                                <p>Review proposal with client</p>
+                                                                <p>Demonstrate value</p>                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.selectedStage=='Negotiation'}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                         <!--<lightning:recordForm
+                                                                              recordId="{!v.recordId}"
+                                                                              objectApiName="Opportunity"
+                                                                              fields="{!v.negotiationFields}"
+                                                                              columns="1"
+                                                                              mode="view" />-->     
+                                                         <div class="slds-path__guidance">
+                                                            <h2 class="slds-path__coach-title">Guidance for Success</h2>
+                                                            <div class="slds-text-longform slds-path__guidance-content">
+                                                                <p>Clarify issues</p>
+                                                                <p>Demonstrate value</p>                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!(v.selectedStage=='Close')||(v.selectedStage=='Closed Lost')||(v.selectedStage=='Closed Won')}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                         <!--<lightning:recordForm
+                                                                              recordId="{!v.recordId}"
+                                                                              objectApiName="Opportunity"
+                                                                              fields="{!v.closeFields}"
+                                                                              columns="1"
+                                                                              mode="view" />-->  
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!!((v.selectedStage=='Gathering Needs')||(v.selectedStage=='Prospecting Options')||(v.selectedStage=='Verbal Interest')||(v.selectedStage=='Sent Proposal')||(v.selectedStage=='Negotiation')||(v.selectedStage=='Close')||(v.selectedStage=='Closed Lost')||(v.selectedStage=='Closed Won'))}">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                        <lightning:recordForm
+                                                                              recordId="{!v.keyFieldRecordID}"
+                                                                              objectApiName="Closure_Stage__c"
+                                                                              fields="{!v.closureFields}"
+                                                                              columns="1"
+                                                                              mode="view" />                                                    
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>                           
+                                        </div>
+                                    </aura:if>
+                                </div>                                
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </article>
+</aura:component>

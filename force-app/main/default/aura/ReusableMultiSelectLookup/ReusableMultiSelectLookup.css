@@ -1,0 +1,14 @@
+.THIS .inputSize {
+    width:100%; 
+}
+.THIS .slds-show {
+    display: block !important;
+}
+.THIS .slds-pill__container,.THIS .slds-pill-container, .THIS .slds-pill_container {
+    display: block;
+    min-height: calc(1.875rem + 2px);
+    padding: .125rem;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    background-color: rgb(255, 255, 255);
+}

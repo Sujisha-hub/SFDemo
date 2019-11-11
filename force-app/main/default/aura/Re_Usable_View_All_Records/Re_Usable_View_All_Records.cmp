@@ -1,0 +1,128 @@
+<aura:component controller="Re_Usable_Cards" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.ViewAll}"/>
+    <aura:attribute name="oppObjs" type='Object[]' access="public" />
+    <aura:attribute name="fileCount" type='String' default="0"/>
+    <aura:attribute name="objectName" type='String' default=""/>
+    <aura:attribute name="objName" type='String' default=""/>
+    <aura:attribute name="objectDisplayName" type='String' default=""/>
+    <aura:attribute name="recordName" type='String' default=""/>
+    <aura:attribute name="columnNames" type="string[]" default="" access="public"/>
+    <aura:attribute name="refField" type="string" access="public" default=""/>
+    <aura:attribute name="recordType" type="string" access="public" default=""/>
+    
+    <div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader" role="banner" data-aura-class="forceListViewManagerHeader">
+        <div class="slds-grid" >
+            <div class="slds-col slds-has-flexi-truncate" >
+                <div class="slds-media slds-no-space slds-grow" >
+                    <div class="slds-media__body slds-align-middle" >
+                        <nav role="navigation" aria-label="Breadcrumbs" >
+                            <ol class="slds-breadcrumb slds-list--horizontal" >
+                                <li class="slds-breadcrumb__item slds-line-height--reset" >
+                                    <a title="{!v.objectDisplayName}"  onclick="{!c.goToObjectName}" class="forceBreadCrumbItem" data-aura-class="forceBreadCrumbItem">
+                                        <span class="uiOutputText" data-aura-class="uiOutputText">{!v.objectDisplayName}</span>
+                                    </a>
+                                </li>
+                                <li class="slds-breadcrumb__item slds-line-height--reset" >
+                                    <a title="{!v.objectDisplayName}"  onclick="{!c.goToRecordName}" class="forceBreadCrumbItem" data-aura-class="forceBreadCrumbItem">
+                                        <span class="uiOutputText" data-aura-class="uiOutputText">{!v.recordName}</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </nav>
+                        <h1 class="slds-page-header__title slds-truncate" title="Files" >Files</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid " >
+            <div class="slds-col slds-align-bottom" >
+                <p class="slds-text-body--small" >
+                    <div>
+                        <span class="countSortedByFilteredBy">{!v.fileCount} items • Sorted by Created Date </span>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="backgroundColor" style="min-height: 580px; background-color: white;">
+        <div class="centerRegion">
+            <div class="test-listViewManager slds-grid slds-grid--vertical forceListViewManager"> 
+                <table class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout" role="grid" style="width: 100%">
+                    <thead>
+                        <aura:if isTrue="{!v.objectName=='Opportunity'}">
+                            <tr class="slds-line-height_reset">
+                                <th scope="col" style="width: 3.75rem;">
+                                    <div class="slds-th__action">
+                                        <span class="slds-assistive-text">Errors</span>
+                                    </div>
+                                </th>                            
+                                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col" style="width: 8.75rem;">
+                                    <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                        <span class="slds-truncate" title="Title">Opportunity Name</span>
+                                    </a>
+                                </th>
+                                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Account Name" scope="col" style="width: 8.75rem;">
+                                    <span class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                        <span class="slds-truncate" title="Owner">Stage</span>
+                                    </span>
+                                </th>
+                                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Close Date" scope="col" style="width: 8.75rem;">
+                                    <span class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                        <span class="slds-truncate" title="Created Date">Face Amount</span>
+                                    </span>
+                                </th>
+                                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Stage" scope="col" style="width: 8.75rem;">
+                                    <span class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+                                        <span class="slds-truncate" title="Size">Close Date</span>
+                                    </span>
+                                </th>                            
+                            </tr>
+                        </aura:if>                        
+                    </thead>
+                    <tbody>
+                        <aura:if isTrue="{!v.objectName=='Opportunity'}">
+                            <aura:iteration items='{!v.oppObjs}' var="sObj" >
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-cell-error slds-cell-edit" role="gridcell">
+                                        <button id="error-01" class="slds-button slds-button_icon slds-button_icon-error slds-m-horizontal_xxx-small slds-hidden" aria-hidden="true" tabindex="-1" title="Item 1 has errors">
+                                            <lightning:icon class="closeIcon slds-button__icon slds-button__icon--large slds-icon-utility-close slds-icon_container forceIcon"  iconName="utility:error" size="xx-small" alternativeText="Close" />
+                                            <span class="slds-assistive-text">Item 1 has errors</span>
+                                        </button>
+                                        <span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
+                                    </td>
+                                    <td class="slds-cell-edit" scope="row" tabindex="0">
+                                        <span class="slds-grid slds-truncate">
+                                            <p class="slds-truncate" >
+                                                <a href="{!'/lightning/r/'+v.objectName+'/'+ sObj.Id + '/view'}" title="{!sObj.Name}">{!sObj.Name}</a>
+                                            </p>
+                                        </span>
+                                    </td>
+                                    <td class="slds-cell-edit" role="gridcell">
+                                        <span class="slds-grid slds-truncate">
+                                            <span class="slds-truncate" title="{!sObj.StageName}">{!sObj.StageName}</span>
+                                            
+                                        </span>
+                                    </td>
+                                    <td class="slds-cell-edit" role="gridcell">
+                                        <span class="slds-grid slds-grid_align-spread">
+                                            <p class="slds-truncate" title="{!sObj.Face_Amount__c}">
+                                                <lightning:formattedNumber value="{!sObj.Face_Amount__c}" style="currency" currencyCode="USD"/>
+                                            </p>
+                                        </span>
+                                    </td>
+                                    <td class="slds-cell-edit" role="gridcell">
+                                        <span class="slds-grid slds-grid_align-spread">
+                                            <lightning:formattedDateTime class="slds-truncate" value="{!sObj.CloseDate}"/>
+                                        </span>
+                                    </td>                                
+                                </tr>
+                            </aura:iteration>
+                        </aura:if>                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</aura:component>

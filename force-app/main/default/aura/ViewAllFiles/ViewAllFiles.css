@@ -1,0 +1,158 @@
+.THIS .viewAllAssCamp {
+    height: 100% !important;
+}
+.THIS .centerRegion {
+    overflow: auto;
+    height: 100%;
+}
+.THIS span.slds-grid.slds-grid_align-spread.fileTitle {
+    float: left;
+}
+.THIS .forceListViewManagerHeader.slds-page-header--object-home {
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: .75rem;
+    padding-left: 1rem;
+}
+.THIS .slds-shrink-none {
+    flex-shrink: 0;
+}
+.THIS .slds-page-header_object-home, .THIS .slds-page-header--object-home {
+    padding-bottom: .75rem;
+}
+.THIS .slds-page-header_joined, .THIS .slds-page-header.slds-has-bottom-magnet {
+    border-bottom: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem .25rem 0 0;
+    box-shadow: none;
+}
+.THIS .slds-page-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    background: rgb(243, 242, 242);
+    background-clip: padding-box;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+    border: 1px solid rgb(221, 219, 218);
+}
+.THIS .slds-grid {
+    display: flex;
+}
+.THIS .slds-has-flexi-truncate {
+    flex: 1 1 0%;
+    min-width: 0;
+}
+
+.THIS .slds-col, .THIS [class*=slds-col_padded], .THIS [class*=slds-col--padded] {
+    flex: 1 1 auto;
+}
+.THIS .slds-media {
+    display: flex;
+    align-items: flex-start;
+}
+.THIS .slds-grow {
+    flex-grow: 1;
+}
+.THIS .slds-no-space {
+    min-width: 0;
+}
+.THIS .slds-media__body, .THIS .slds-media__body>:last-child {
+    margin-bottom: 0;
+}
+.THIS .slds-media__body {
+    flex: 1;
+    min-width: 0;
+}
+.THIS .slds-align-middle {
+    vertical-align: middle;
+    align-self: center;
+}
+.THIS .article, .THIS .aside, .THIS .details, .THIS .figcaption, .THIS .figure, .THIS .footer, .THIS .header, .THIS .hgroup, .THIS .main, .THIS .menu, .THIS .nav, .THIS .section, .THIS .summary {
+    display: block;
+}
+
+.THIS .slds-list_horizontal, .THIS .slds-list--horizontal {
+    display: flex;
+}
+.THIS .ol, .THIS .ul {
+    list-style: none;
+}
+
+.THIS .h1, .THIS .h2, .THIS .h3, .THIS .h4, .THIS .h5, .THIS .h6, .THIS .p, .THIS .ol, .THIS .ul, .THIS .dl, .THIS .fieldset {
+    margin: 0;
+    padding: 0;
+}
+.THIS .slds-line-height_reset, .THIS .slds-line-height--reset {
+    line-height: 1;
+}
+
+.THIS .slds-breadcrumb .slds-list__item, .THIS .slds-breadcrumb__item {
+    position: relative;
+}
+.THIS .slds-breadcrumb .slds-list__item:first-child:before, .THIS .slds-breadcrumb__item:first-child:before {
+    content: '';
+}
+
+.THIS .slds-breadcrumb .slds-list__item:before, .THIS .slds-breadcrumb__item:before {
+    content: '\003E';
+    position: absolute;
+    left: -.25rem;
+}
+.THIS .slds-breadcrumb .slds-list__item:first-child>a, .THIS .slds-breadcrumb__item:first-child>a {
+    padding-left: 0;
+}
+.THIS .slds-breadcrumb .slds-list__item>a, .THIS .slds-breadcrumb__item>a {
+    display: block;
+    padding: 0 .5rem;
+}
+.THIS .a, .THIS .button {
+    cursor: pointer;
+}
+.THIS .a {
+    color: rgb(0, 109, 204);
+    text-decoration: none;
+    transition: color .1s linear;
+}
+.THIS .a {
+    background-color: transparent;
+}
+.THIS .slds-media__body, .THIS .slds-media__body>:last-child {
+    margin-bottom: 0;
+}
+.THIS .slds-truncate {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.THIS .slds-page-header__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.25;
+    display: block;
+}
+.THIS .h1, .THIS .h2, .THIS .h3, .THIS .h4, .THIS .h5, .THIS .h6 {
+    font-weight: inherit;
+    font-size: 1em;
+}
+.THIS .h1, .THIS .h2, .THIS .h3, .THIS .h4, .THIS .h5, .THIS .h6, .THIS .p, .THIS .ol, .THIS .ul, .THIS .dl, .THIS .fieldset {
+    margin: 0;
+    padding: 0;
+}
+.THIS .h1 {
+    font-size: 2em;
+    margin: .67em 0;
+}
+.THIS .slds-align-bottom {
+    vertical-align: bottom;
+    align-self: flex-end;
+}
+.THIS .slds-col,.THIS [class*=slds-col_padded], .THIS [class*=slds-col--padded] {
+    flex: 1 1 auto;
+}
+.THIS .slds-text-body_small,.THIS .slds-text-body--small {
+    font-size: .75rem;
+}
+.THIS .h1, .THIS .h2, .THIS .h3, .THIS .h4, .THIS .h5, .THIS .h6, .THIS .p, .THIS .ol, .THIS .ul, .THIS .dl, .THIS .fieldset {
+    margin: 0;
+    padding: 0;
+}

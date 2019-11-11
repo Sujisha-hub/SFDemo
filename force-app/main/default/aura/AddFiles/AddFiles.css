@@ -1,0 +1,238 @@
+.THIS .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+.THIS .ol, .THIS .ul {
+    list-style: none;
+}
+.THIS .h1, .THIS .h2, .THIS .h3, .THIS .h4, .THIS .h5, .THIS .h6, .THIS .p, .THIS .ol, .THIS .ul, .THIS .dl, .THIS .fieldset {
+    margin: 0;
+    padding: 0;
+}
+.THIS .article, .THIS .aside, .THIS .details, .THIS .figcaption, .THIS .figure, .THIS .footer, .THIS .header, .THIS .hgroup, .THIS .main, .THIS .menu, .THIS .nav, .THIS .section, .THIS .summary {
+    display: block;
+}
+.THIS .forceContentVirtualRelatedListStencil:last-child {
+    border-bottom: 0;
+}
+.THIS .forceContentVirtualRelatedListStencil {
+    list-style: none;
+    background-color: #ffffff;
+}
+.THIS .slds-var-p-vertical_xx-small {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
+.THIS .slds-var-p-horizontal_medium {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.THIS .forceContentVirtualRelatedListStencil a, .THIS .forceContentVirtualRelatedListStencil a:hover, .THIS .forceContentVirtualRelatedListStencil a:focus {
+    text-decoration: none;
+}
+
+.THIS .a, .THIS .button {
+    cursor: pointer;
+}
+.THIS .a {
+    color: rgb(0, 109, 204);
+    text-decoration: none;
+    transition: color .1s linear;
+}
+.THIS .a {
+    background-color: transparent;
+}
+.THIS .forceContentVirtualRelatedListStencil .filerow {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.THIS .forceContentVirtualRelatedListStencil .checkBoxContainer {
+    display: none;
+    vertical-align: middle;
+    width: 28px;
+    padding-right: .75rem;
+}
+.THIS .slds-checkbox {
+    display: inline-block;
+    position: relative;
+}
+
+.THIS .forceStyle .assistiveText {
+    position: absolute;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+}
+.THIS .assistiveText {
+    position: absolute!important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px,1px,1px,1px);
+}
+.THIS [class*=slds-size_], .THIS [class*=slds-size--] {
+    flex: none;
+}
+.THIS .slds-size_12-of-12, .THIS .slds-size--12-of-12 {
+    width: 100%;
+}
+
+.THIS .slds-grid {
+    display: flex;
+}
+.THIS .forceContentVirtualRelatedListStencil .thumbnailImg.medium {
+    height: auto;
+    min-width: 30px;
+    max-width: 30px;
+    max-height: 35px;
+}
+
+.THIS .slds-show_inline-block, .THIS .slds-show--inline-block {
+    display: inline-block;
+}
+.THIS .slds-float_left, .THIS .slds-float--left {
+    float: left;
+}
+.THIS .slds-align-middle {
+    vertical-align: middle;
+    align-self: center;
+}
+.THIS .forceContentVirtualRelatedListStencil .thumbnailContainer {
+    display: table;
+    margin: 0 auto;
+}
+.THIS .slds-icon_container,.THIS .slds-icon__container {
+    display: inline-block;
+    border-radius: .25rem;
+}
+.THIS .svg:not(:root) {
+    overflow: hidden;
+}
+.THIS .audio, .THIS .canvas, .THIS .iframe, .THIS .img, .THIS .svg, .THIS .video {
+    vertical-align: middle;
+}
+.THIS .slds-assistive-text {
+    position: absolute!important;
+    margin: -1px!important;
+    border: 0!important;
+    padding: 0!important;
+    width: 1px!important;
+    height: 1px!important;
+    overflow: hidden!important;
+    clip: rect(0 0 0 0)!important;
+    text-transform: none!important;
+    white-space: nowrap!important;
+}
+.THIS .slds-show_inline-block, .THIS .slds-show--inline-block {
+    display: inline-block;
+}
+.THIS .slds-truncate {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.THIS .slds-float_left, .THIS .slds-float--left {
+    float: left;
+}
+.THIS .slds-p-left_x-small, .THIS .slds-p-left--x-small {
+    padding-left: .5rem;
+}
+.THIS .slds-m-right_x-small, .THIS .slds-m-right--x-small {
+    margin-right: .5rem;
+}
+.THIS .forceContentVirtualRelatedListStencil .itemTitle {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.THIS .slds-text-color_default, .THIS .slds-text-color--default {
+    color: rgb(8, 7, 7);
+}
+.THIS .forceContentVirtualRelatedListStencil .secondaryFields {
+    color: rgb(62, 62, 60);
+    display: inline-block;
+}
+.THIS .slds-text-body_small, .THIS .slds-text-body--small {
+    font-size: .75rem;
+}
+
+.THIS .slds-truncate {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.THIS .slds-m-around_none, .THIS .slds-m-around--none {
+    margin: 0!important;
+}
+.THIS .h1, .THIS .h2, .THIS .h3, .THIS .h4, .THIS .h5, .THIS .h6, .THIS .p, .THIS .ol, .THIS .ul, .THIS .dl, .THIS .fieldset {
+    margin: 0;
+    padding: 0;
+}
+.THIS .forceContentVirtualRelatedListStencil .itemLabel {
+    -webkit-flex: 0 100 auto;
+}
+.THIS .forceContentVirtualRelatedListStencil .cover {
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 80;
+    top: 0;
+}
+.THIS .forceContentVirtualRelatedListStencil .secondaryFields span:after {
+    content: "\2022";
+    margin: 0 5px;
+}
+.THIS .slds-tabs_card .slds-card_boundary, .THIS .slds-tabs_card.slds-tabs_card .slds-card_boundary,.THIS .slds-card-wrapper .slds-card_boundary {
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+}
+
+.THIS .slds-tabs_card .slds-card,.THIS .slds-tabs_card .slds-card-wrapper,.THIS .slds-tabs_card.slds-tabs_card .slds-card,.THIS .slds-tabs_card.slds-tabs_card .slds-card-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+}
+.THIS .slds-card .slds-card,.THIS .slds-card .slds-card-wrapper,.THIS .slds-card-wrapper .slds-card,.THIS .slds-card-wrapper .slds-card-wrapper,.THIS .slds-modal .slds-card,.THIS .slds-modal .slds-card-wrapper,.THIS .slds-tabs_default .slds-card,.THIS .slds-tabs_default .slds-card-wrapper,.THIS .slds-tabs--default .slds-card,.THIS .slds-tabs--default .slds-card-wrapper,.THIS .slds-tabs_card .slds-card,.THIS .slds-tabs_card .slds-card-wrapper,.THIS .slds-tabs_card.slds-tabs_card .slds-card,.THIS .slds-tabs_card.slds-tabs_card .slds-card-wrapper {
+    background: rgb(255, 255, 255);
+    border: 0;
+    box-shadow: none;
+}
+.THIS .slds-card {
+    position: relative;
+    padding: 0;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    background-clip: padding-box;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+}
+.THIS .article,.THIS .aside, .THIS .details, .THIS .figcaption, .THIS .figure, .THIS .footer, .THIS .header, .THIS .hgroup, .THIS .main, .THIS .menu, .THIS .nav, .THIS .section, .THIS .summary {
+    display: block;
+}
+.THIS .slds-grid.slds-page-header.slds-page-header--object-home.layout {
+    border: 1px dashed rgb(221, 219, 218);
+    border-radius: .25rem;
+}
+.THIS .errormsg{
+    width: 100%;
+    text-align: center;
+}
+.THIS .slds-modal__content{
+    overflow:initial;
+}
+.THIS .slds-form-element.slds-dropdown-trigger.slds-dropdown-trigger_click {
+    width: 100%;
+}
+.THIS slds-icon-utility-down .slds-icon
+{
+    width: 1rem;
+    height: 1rem;
+    fill: gray;
+}
