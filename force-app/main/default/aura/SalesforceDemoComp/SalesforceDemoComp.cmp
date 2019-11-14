@@ -1,5 +1,5 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     
-    <lightning:button variant="base" label="Case Button" title="Base action"/>
+    <lightning:button variant="base" label="CaseButton" title="Base action"/>
 
 </aura:component>
