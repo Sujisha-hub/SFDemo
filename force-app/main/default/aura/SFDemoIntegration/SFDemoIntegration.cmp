@@ -1,6 +1,6 @@
 <aura:component>
 
-    <lightning:button variant="base" label="Light Base" title="Base action"/>
+    <lightning:button variant="base" label="Base" title="Base action"/>
 
 
 </aura:component>	
