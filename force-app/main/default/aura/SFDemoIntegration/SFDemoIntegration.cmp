@@ -1,6 +1,7 @@
 <aura:component>
 
     <lightning:button variant="base" label="Base" title="Base action"/>
+    
     <lightning:button label="Neutral" title="Neutral action"/>
 
 </aura:component>	
