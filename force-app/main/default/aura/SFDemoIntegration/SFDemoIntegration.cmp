@@ -4,4 +4,4 @@
     
     <lightning:button label="Neutral" title="Neutral action"/>
 
-</aura:component>	
+</aura:component>
