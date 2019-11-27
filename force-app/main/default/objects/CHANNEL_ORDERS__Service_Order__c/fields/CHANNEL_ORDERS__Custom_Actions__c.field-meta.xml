@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CHANNEL_ORDERS__Custom_Actions__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&#39;/apex/CHANNEL_ORDERS__COA_CloneServiceOrder?id=&#39;+Id , $Label.channel_orders__custom_action_clone)&amp;&#39; &#39;&amp;IF( CHANNEL_ORDERS__Service_Order_Status1__c == &#39;Received&#39;, &#39;| &#39;+HYPERLINK(&#39;/apex/CHANNEL_ORDERS__COA_RecallServiceOrder?id=&#39;+Id, $Label.channel_orders__custom_action_recall)&amp;&#39; &#39;, &#39;&#39;)</formula>
+    <label>Custom Actions</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
