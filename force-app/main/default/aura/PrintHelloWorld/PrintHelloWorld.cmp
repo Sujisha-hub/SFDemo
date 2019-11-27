@@ -5,6 +5,6 @@
     
    <!-- <lightning:button variant="brand" label="Submit" onclick="{! c.handleClick }" />-->
 
-    <p aura:id="valueMsg1">{!v.Message}</p>
+    <p aura:id="valueMsg2">{!v.Message}</p>
 
 </aura:component>
