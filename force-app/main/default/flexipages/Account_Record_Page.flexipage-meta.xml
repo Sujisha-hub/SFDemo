@@ -124,6 +124,9 @@
         <componentInstances>
             <componentName>runtime_sales_activities:activityPanel</componentName>
         </componentInstances>
+        <componentInstances>
+            <componentName>PrintHelloWorld</componentName>
+        </componentInstances>
         <mode>Replace</mode>
         <name>activityTabContent</name>
         <type>Facet</type>
