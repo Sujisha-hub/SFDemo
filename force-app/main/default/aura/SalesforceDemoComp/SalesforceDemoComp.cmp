@@ -1,5 +1,5 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     
-    <lightning:button variant="base" label="High Weight 2" title="action" />
+    <lightning:button variant="base" label="High Weight 3" title="action" />
 
 </aura:component>
