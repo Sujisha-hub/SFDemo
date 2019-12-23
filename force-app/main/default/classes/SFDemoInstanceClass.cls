@@ -1,5 +1,5 @@
 public with sharing class SFDemoInstanceClass {
     public SFDemoInstanceClass() {
-string a = 'self Giv';
+string a = 'self Give';
     }
 }
