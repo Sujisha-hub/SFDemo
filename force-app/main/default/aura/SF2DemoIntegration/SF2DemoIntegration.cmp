@@ -1,6 +1,6 @@
 <aura:component>
     
-    <aura:attribute name="Message" type='String' access="public" default="Hello Welcome Avasoft"/>   
+    <aura:attribute name="Message" type='String' access="public" default="Hello Welcome Avasoft 1"/>   
 
     <p aura:id="value">{!v.Message}</p>
 
